@@ -4,7 +4,7 @@ function createSquare(row) {
     row.appendChild(square);
 }
 
-function createRow(squares) {
+function createRow(squares, grid) {
     const row = document.createElement("div");
     row.classList.add("row");
     
@@ -12,7 +12,20 @@ function createRow(squares) {
         createSquare(row);
     }
 
-    container.appendChild(row);
+    grid.appendChild(row);
+}
+
+function createGrid(rows) {
+    const grid = document.createElement("div");
+    grid.setAttribute("id", "grid");
+
+    for (let i = 0; i < rows; i++) {
+        createRow(rows, grid);
+    }
+
+    container.appendChild(grid);
 }
 
 const container = document.querySelector(".container");
+
+createGrid(16);

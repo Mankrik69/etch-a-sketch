@@ -7,3 +7,7 @@
 .row {
     display: flex;
 }
+
+.colored {
+    background-color: black;
+}

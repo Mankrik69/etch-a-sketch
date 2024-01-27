@@ -44,6 +44,13 @@ function randomColor() {
     return `rgb(${randomInteger(0, 255)}, ${randomInteger(0, 255)}, ${randomInteger(0, 255)})`;
 }
 
+let r = 255;
+let g = 255;
+let b = 255;
+function darkeningColor() {
+    return `rgb(${r -= 25.5}, ${g -= 25.5}, ${b -= 25.5})`
+}
+
 function blackColor() {
     return "black";
 }
@@ -53,6 +60,7 @@ const size = document.querySelector("#size");
 const sizeBy = document.querySelector("#sizeBy");
 const clearBtn = document.querySelector("#clear");
 const randomColorBtn = document.querySelector("#randomColor");
+const darkeningBtn = document.querySelector("#darkening");
 sizeBy.textContent = `${size.value}x${size.value}`
 
 let color = blackColor;
@@ -82,3 +90,7 @@ randomColorBtn.addEventListener("click", () => {
         randomColorBtn.style.backgroundColor = "";
     }
 });
+
+darkeningBtn.addEventListener("click", () => {
+    color = darkeningColor;
+})

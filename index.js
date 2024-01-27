@@ -23,6 +23,12 @@ function createGrid(rows) {
         createRow(rows, grid);
     }
 
+    grid.addEventListener("mouseenter", (e) => {
+        if (e.target.id === "grid" || e.target.className === "row") return;
+
+        e.target.classList.add("colored");
+    }, true);
+
     return grid;
 }
 
@@ -33,26 +39,21 @@ function removeGrid() {
 const container = document.querySelector(".container");
 const size = document.querySelector("#size");
 const sizeBy = document.querySelector("#sizeBy");
+const clearBtn = document.querySelector("#clear");
 sizeBy.textContent = `${size.value}x${size.value}`
 
 let grid = createGrid(16);
 container.appendChild(grid);
-
-grid.addEventListener("mouseenter", (e) => {
-    if (e.target.id === "grid" || e.target.className === "row") return;
-
-    e.target.classList.add("colored");
-}, true);
 
 size.addEventListener("input", () => {
     removeGrid();
     sizeBy.textContent = `${size.value}x${size.value}`;
     grid = createGrid(size.value);
     container.appendChild(grid);
-
-    grid.addEventListener("mouseenter", (e) => {
-        if (e.target.id === "grid" || e.target.className === "row") return;
-
-        e.target.classList.add("colored");
-    }, true);
 });
+
+clearBtn.addEventListener("click", () => {
+    removeGrid();
+    grid = createGrid(size.value);
+    container.appendChild(grid);
+})

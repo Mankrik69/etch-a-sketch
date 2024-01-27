@@ -9,6 +9,7 @@ body {
     width: 600px;
     height: 600px;
     display: flex;
+    margin-bottom: 10px;
 }
 
 .square {

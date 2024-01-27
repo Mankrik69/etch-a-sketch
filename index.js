@@ -26,7 +26,7 @@ function createGrid(rows) {
     grid.addEventListener("mouseenter", (e) => {
         if (e.target.id === "grid" || e.target.className === "row") return;
 
-        e.target.classList.add("colored");
+        e.target.style.backgroundColor = color();
     }, true);
 
     return grid;
@@ -36,11 +36,26 @@ function removeGrid() {
     container.removeChild(grid);
 }
 
+function randomColor() {
+    function randomInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    return `rgb(${randomInteger(0, 255)}, ${randomInteger(0, 255)}, ${randomInteger(0, 255)})`;
+}
+
+function blackColor() {
+    return "black";
+}
+
 const container = document.querySelector(".container");
 const size = document.querySelector("#size");
 const sizeBy = document.querySelector("#sizeBy");
 const clearBtn = document.querySelector("#clear");
+const randomColorBtn = document.querySelector("#randomColor");
 sizeBy.textContent = `${size.value}x${size.value}`
+
+let color = blackColor;
 
 let grid = createGrid(16);
 container.appendChild(grid);
@@ -56,4 +71,14 @@ clearBtn.addEventListener("click", () => {
     removeGrid();
     grid = createGrid(size.value);
     container.appendChild(grid);
-})
+});
+
+randomColorBtn.addEventListener("click", () => {
+    if (color() === "black") {
+        color = randomColor;
+        randomColorBtn.style.backgroundColor = "yellow";
+    } else {
+        color = blackColor;
+        randomColorBtn.style.backgroundColor = "";
+    }
+});

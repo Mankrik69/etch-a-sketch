@@ -7,7 +7,7 @@ function createSquare(row) {
 function createRow(squares, grid) {
     const row = document.createElement("div");
     row.classList.add("row");
-    
+
     for (let i = 0; i < squares; i++) {
         createSquare(row);
     }
@@ -26,12 +26,33 @@ function createGrid(rows) {
     return grid;
 }
 
-const container = document.querySelector(".container");
-const grid = createGrid(16);
+function removeGrid() {
+    container.removeChild(grid);
+}
 
+const container = document.querySelector(".container");
+const size = document.querySelector("#size");
+const sizeBy = document.querySelector("#sizeBy");
+sizeBy.textContent = `${size.value}x${size.value}`
+
+let grid = createGrid(16);
 container.appendChild(grid);
+
 grid.addEventListener("mouseenter", (e) => {
-    if (e.target.id === "grid" || e.target.className ==="row") return;
+    if (e.target.id === "grid" || e.target.className === "row") return;
 
     e.target.classList.add("colored");
 }, true);
+
+size.addEventListener("input", () => {
+    removeGrid();
+    sizeBy.textContent = `${size.value}x${size.value}`;
+    grid = createGrid(size.value);
+    container.appendChild(grid);
+
+    grid.addEventListener("mouseenter", (e) => {
+        if (e.target.id === "grid" || e.target.className === "row") return;
+
+        e.target.classList.add("colored");
+    }, true);
+});

@@ -32,6 +32,6 @@ const grid = createGrid(16);
 container.appendChild(grid);
 grid.addEventListener("mouseenter", (e) => {
     if (e.target.id === "grid" || e.target.className ==="row") return;
-    
+
     e.target.classList.add("colored");
 }, true);

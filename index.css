@@ -1,11 +1,29 @@
+body {
+    justify-content: center;
+    display: flex;
+}
+
+.container {
+    width: 600px;
+    height: 600px;
+    display: flex;
+}
+
 .square {
-    width: 10px;
-    height: 10px;
-    border: 1px solid black;
+    flex: 1;
+    flex-basis: 10px;
+    border: 1px solid gray;
 }
 
 .row {
+    flex: 1;
     display: flex;
+    flex-direction: column;
+}
+
+#grid {
+    display: flex;
+    flex: 1;
 }
 
 .colored {

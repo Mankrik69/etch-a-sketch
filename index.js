@@ -26,7 +26,7 @@ function createGrid(rows) {
     grid.addEventListener("mouseenter", (e) => {
         if (e.target.id === "grid" || e.target.className === "row") return;
 
-        e.target.style.backgroundColor = color();
+        e.target.style.backgroundColor = setColor(mode);
     }, true);
 
     return grid;
@@ -44,16 +44,38 @@ function randomColor() {
     return `rgb(${randomInteger(0, 255)}, ${randomInteger(0, 255)}, ${randomInteger(0, 255)})`;
 }
 
-let r = 255;
-let g = 255;
-let b = 255;
-function darkeningColor() {
-    return `rgb(${r -= 25.5}, ${g -= 25.5}, ${b -= 25.5})`
+// function darkeningColor(target) {
+//     function isGray(target) {
+//         if (target.classList.contains("gray")) {
+//             return true;
+//         }
+
+//         return false;
+//     }
+
+//     if (!isGray(target)) {
+//         target.classList.add("gray");
+//         return "rgb(230, 230, 230)";
+//     }
+
+//     let color = target.style.backgroundColor.slice(4, -1).split(", ");
+//     let [r, g, b] = color;
+
+//     return `rgb(${r - 25.5}, ${g - 25.5}, ${b - 25.5})`;
+// }
+
+function setColor(mode) {
+    switch (mode) {
+        case "black color": {
+            return "rgb(0, 0, 0)";
+        }
+
+        case "random color": {
+            return randomColor();
+        }
+    }
 }
 
-function blackColor() {
-    return "black";
-}
 
 const container = document.querySelector(".container");
 const size = document.querySelector("#size");
@@ -62,8 +84,7 @@ const clearBtn = document.querySelector("#clear");
 const randomColorBtn = document.querySelector("#randomColor");
 const darkeningBtn = document.querySelector("#darkening");
 sizeBy.textContent = `${size.value}x${size.value}`
-
-let color = blackColor;
+let mode = "black color";
 
 let grid = createGrid(16);
 container.appendChild(grid);
@@ -82,15 +103,21 @@ clearBtn.addEventListener("click", () => {
 });
 
 randomColorBtn.addEventListener("click", () => {
-    if (color() === "black") {
-        color = randomColor;
+    if (mode === "black color") {
+        mode = "random color";
         randomColorBtn.style.backgroundColor = "yellow";
     } else {
-        color = blackColor;
+        mode = "black color";
         randomColorBtn.style.backgroundColor = "";
     }
 });
 
-darkeningBtn.addEventListener("click", () => {
-    color = darkeningColor;
-})
+// darkeningBtn.addEventListener("click", (e) => {
+//     if (setColor !== darkeningColor) {
+//         setColor = darkeningColor;
+//         darkeningBtn.style.backgroundColor = "gray";
+//     } else {
+//         setColor = blackColor;
+//         darkeningBtn.style.backgroundColor = "";
+//     }
+// });

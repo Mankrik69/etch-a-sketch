@@ -26,7 +26,7 @@ function createGrid(rows) {
     grid.addEventListener("mouseenter", (e) => {
         if (e.target.id === "grid" || e.target.className === "row") return;
 
-        e.target.style.backgroundColor = setColor(mode);
+        e.target.style.backgroundColor = setColor(mode, e.target);
     }, true);
 
     return grid;
@@ -44,27 +44,22 @@ function randomColor() {
     return `rgb(${randomInteger(0, 255)}, ${randomInteger(0, 255)}, ${randomInteger(0, 255)})`;
 }
 
-// function darkeningColor(target) {
-//     function isGray(target) {
-//         if (target.classList.contains("gray")) {
-//             return true;
-//         }
+function shading(target) {
+    let color;
 
-//         return false;
-//     }
+    if (target.style.backgroundColor === "") {
+        color = [255, 255, 255];
+    } else {
+        color = target.style.backgroundColor.slice(4, -1).split(", ");
+    }
 
-//     if (!isGray(target)) {
-//         target.classList.add("gray");
-//         return "rgb(230, 230, 230)";
-//     }
 
-//     let color = target.style.backgroundColor.slice(4, -1).split(", ");
-//     let [r, g, b] = color;
+    let [r, g, b] = color;
+    console.log(target, color);
+    return `rgb(${r - 25.5}, ${g - 25.5}, ${b - 25.5})`;
+}
 
-//     return `rgb(${r - 25.5}, ${g - 25.5}, ${b - 25.5})`;
-// }
-
-function setColor(mode) {
+function setColor(mode, target) {
     switch (mode) {
         case "black color": {
             return "rgb(0, 0, 0)";
@@ -72,6 +67,10 @@ function setColor(mode) {
 
         case "random color": {
             return randomColor();
+        }
+
+        case "shading": {
+            return shading(target);
         }
     }
 }
@@ -82,7 +81,7 @@ const size = document.querySelector("#size");
 const sizeBy = document.querySelector("#sizeBy");
 const clearBtn = document.querySelector("#clear");
 const randomColorBtn = document.querySelector("#randomColor");
-const darkeningBtn = document.querySelector("#darkening");
+const shadingBtn = document.querySelector("#shading");
 sizeBy.textContent = `${size.value}x${size.value}`
 let mode = "black color";
 
@@ -112,12 +111,12 @@ randomColorBtn.addEventListener("click", () => {
     }
 });
 
-// darkeningBtn.addEventListener("click", (e) => {
-//     if (setColor !== darkeningColor) {
-//         setColor = darkeningColor;
-//         darkeningBtn.style.backgroundColor = "gray";
-//     } else {
-//         setColor = blackColor;
-//         darkeningBtn.style.backgroundColor = "";
-//     }
-// });
+shadingBtn.addEventListener("click", (e) => {
+    if (mode !== "shading") {
+        mode = "shading";
+        shadingBtn.style.backgroundColor = "gray";
+    } else {
+        mode = "black color";
+        shadingBtn.style.backgroundColor = "";
+    }
+});
